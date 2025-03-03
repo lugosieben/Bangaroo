@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bangaroo</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<style>
+			body {
+				background-color: white;
+				color: black;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				font-family: Arial, sans-serif;
+			}
+			.logo {
+				width: 200px;
+				height: 200px;
+				margin-bottom: 20px;
+			}
+			.label {
+				font-size: 2.5rem;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="favicon.ico" class="logo" />
+		<div class="label">Bangaroo</div>
+		<div class="search-container" style="margin-top: 20px; width: 80%; max-width: 500px">
+			<form action="search.html" method="get" style="display: flex">
+				<input
+					type="text"
+					name="q"
+					placeholder="Search..."
+					autofocus
+					style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; font-size: 16px" />
+				<input
+					type="submit"
+					value="Search"
+					style="
+						padding: 10px 15px;
+						background-color: black;
+						color: white;
+						border: none;
+						border-radius: 0 4px 4px 0;
+						cursor: pointer;
+					" />
+			</form>
+		</div>
+
+		<script>
+			window.onload = function () {
+				document.querySelector('input[name="q"]').focus();
+			};
+		</script>
+	</body>
+</html>
