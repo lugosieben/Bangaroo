@@ -29,10 +29,9 @@
 				const cleanQuery = searchQuery.replace(/!\S+\s*/i, "").trim();
 
 				const searchUrl = selectedBang.replace("%s", encodeURIComponent(cleanQuery).replace(/%2F/g, "/"));
-				console.log(searchUrl);
 				window.location.replace(searchUrl);
 			} else {
-				//window.location.replace("./");
+				window.location.replace("./");
 			}
 		</script>
 	</head>
