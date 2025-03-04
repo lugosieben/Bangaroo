@@ -119,16 +119,7 @@
 				</h2>
 				<ol>
 					<li>Right-click on the search bar at the top of Firefox.</li>
-					<li>Select <strong>Add a Keyword for this Search</strong>.</li>
-					<li>
-						Fill in the following:
-						<ul>
-							<li><strong>Name</strong>: Bangaroo</li>
-							<li><strong>Keyword</strong>: bangaroo (or any shortcut you prefer)</li>
-							<li><strong>URL</strong>: Paste the URL copied from above</li>
-						</ul>
-					</li>
-					<li>Click <strong>Save</strong>.</li>
+					<li>Select <strong>Add Bangaroo</strong>.</li>
 					<li>To set as default, go to Settings > Search > Default Search Engine and select Bangaroo.</li>
 				</ol>
 			</div>
@@ -151,7 +142,7 @@
 						<ul>
 							<li><strong>Search engine</strong>: Bangaroo</li>
 							<li><strong>Keyword</strong>: bangaroo</li>
-							<li><strong>URL with %s in place of query</strong>: Paste the URL copied from above</li>
+							<li><strong>URL</strong>: Paste the URL copied from above</li>
 						</ul>
 					</li>
 					<li>Click <strong>Add</strong>.</li>
@@ -183,7 +174,7 @@
 						<ul>
 							<li><strong>Search engine</strong>: Bangaroo</li>
 							<li><strong>Keyword</strong>: bangaroo</li>
-							<li><strong>URL with %s in place of query</strong>: Paste the URL copied from above</li>
+							<li><strong>URL</strong>: Paste the URL copied from above</li>
 						</ul>
 					</li>
 					<li>Click <strong>Add</strong>.</li>
@@ -195,7 +186,6 @@
 		</div>
 
 		<script>
-			// Generate the search URL based on the current location
 			function generateSearchUrl() {
 				const protocol = window.location.protocol;
 				const host = window.location.host;
@@ -204,7 +194,6 @@
 				return `${protocol}//${host}${path}search.html?q=%s`;
 			}
 
-			// Display and allow copying of the search URL
 			document.getElementById("search-url").textContent = generateSearchUrl();
 
 			function copySearchUrl() {
