@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Customize Bangaroo</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+			h1 {
+				text-align: center;
+			}
+			.form-group {
+				margin-bottom: 15px;
+			}
+			label {
+				display: block;
+				margin-bottom: 5px;
+			}
+			input[type="text"],
+			input[type="url"] {
+				width: 100%;
+				padding: 8px;
+				box-sizing: border-box;
+			}
+			button {
+				padding: 10px 15px;
+				background-color: black;
+				color: white;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				margin-right: 10px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-top: 20px;
+			}
+			th,
+			td {
+				border: 1px solid #ddd;
+				padding: 8px;
+				text-align: left;
+			}
+			th {
+				background-color: #f2f2f2;
+			}
+			.banner {
+				background-color: #dff0d8;
+				color: #3c763d;
+				padding: 10px;
+				margin: 10px 0;
+				border-radius: 4px;
+				display: none;
+			}
+			.home-button {
+				display: block;
+				margin: 20px auto;
+			}
+			.default-column {
+				width: 80px;
+				text-align: center;
+			}
+			.disabled-row {
+				background-color: #f5f5f5;
+				color: #999;
+			}
+
+			.disabled-row button,
+			.disabled-row input[type="radio"] {
+				opacity: 0.5;
+				cursor: not-allowed;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Customize Bangaroo</h1>
+
+		<div id="message" class="banner"></div>
+
+		<div class="form-group">
+			<h2>Add New Bang</h2>
+			<div class="form-group">
+				<label for="shortcut">Shortcut (without !)</label>
+				<input type="text" id="shortcut" placeholder="e.g. g for Google" />
+			</div>
+			<div class="form-group">
+				<label for="url">URL Template (use %s for search term)</label>
+				<input type="url" id="url" placeholder="e.g. https://www.google.com/search?q=%s" />
+			</div>
+			<button id="addBang">Add Bang</button>
+		</div>
+
+		<h2>Current Bangs</h2>
+		<table id="bangsTable">
+			<thead>
+				<tr>
+					<th>Shortcut</th>
+					<th>URL Template</th>
+					<th class="default-column">Default</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Bangs will be inserted here -->
+			</tbody>
+		</table>
+
+		<button class="home-button" onclick="window.location.href='index.html'">Back to Home</button>
+
+		<script>
+			// Default bangs if none in localStorage
+			const defaultBangs = {
+				g: "https://www.google.com/search?q=%s",
+				w: "https://en.wikipedia.org/wiki/Special:Search?search=%s",
+				yt: "https://www.youtube.com/results?search_query=%s",
+				gh: "https://github.com/search?q=%s",
+				a: "https://www.amazon.com/s?k=%s",
+				m: "https://www.google.com/maps?q=%s",
+				r: "https://www.reddit.com/search/?q=%s",
+				pp: "https://www.perplexity.ai/?s=o&q=%s",
+				gpt: "https://chat.openai.com?q=%s",
+				t3: "https://www.t3.chat/new?q=%s",
+			};
+
+			let bangs = {};
+			let defaultBang = "g";
+
+			function loadBangs() {
+				const savedBangs = localStorage.getItem("bangarooBangs");
+				const savedDefault = localStorage.getItem("bangarooDefault");
+
+				if (savedBangs) {
+					bangs = JSON.parse(savedBangs);
+				} else {
+					bangs = { ...defaultBangs };
+				}
+
+				if (savedDefault) {
+					defaultBang = savedDefault;
+				}
+
+				renderBangsTable();
+			}
+
+			function saveBangs() {
+				const bangsToSave = { ...bangs };
+				delete bangsToSave.customize;
+				localStorage.setItem("bangarooBangs", JSON.stringify(bangsToSave));
+				localStorage.setItem("bangarooDefault", defaultBang);
+				showMessage("Settings saved successfully!");
+			}
+
+			function renderBangsTable() {
+				const tbody = document.querySelector("#bangsTable tbody");
+				tbody.innerHTML = "";
+
+				Object.entries(bangs)
+					.filter(([shortcut]) => shortcut !== "customize")
+					.forEach(([shortcut, url]) => {
+						const row = document.createElement("tr");
+						const shortcutCell = document.createElement("td");
+						shortcutCell.textContent = "!" + shortcut;
+						row.appendChild(shortcutCell);
+
+						const urlCell = document.createElement("td");
+						urlCell.textContent = url;
+						row.appendChild(urlCell);
+
+						const defaultCell = document.createElement("td");
+						defaultCell.className = "default-column";
+						const radioBtn = document.createElement("input");
+						radioBtn.type = "radio";
+						radioBtn.name = "defaultBang";
+						radioBtn.value = shortcut;
+						radioBtn.checked = shortcut === defaultBang;
+						radioBtn.addEventListener("change", () => {
+							defaultBang = shortcut;
+							saveBangs();
+						});
+						defaultCell.appendChild(radioBtn);
+						row.appendChild(defaultCell);
+
+						const actionsCell = document.createElement("td");
+						const deleteBtn = document.createElement("button");
+						deleteBtn.textContent = "Delete";
+						deleteBtn.addEventListener("click", () => {
+							delete bangs[shortcut];
+							if (shortcut === defaultBang) {
+								const keys = Object.keys(bangs);
+								if (keys.length > 0) {
+									defaultBang = keys[0];
+								} else {
+									defaultBang = "g";
+								}
+							}
+							saveBangs();
+							renderBangsTable();
+						});
+						actionsCell.appendChild(deleteBtn);
+						row.appendChild(actionsCell);
+
+						tbody.appendChild(row);
+					});
+
+				const customizeRow = document.createElement("tr");
+				customizeRow.className = "disabled-row";
+
+				const shortcutCell = document.createElement("td");
+				shortcutCell.textContent = "!customize";
+				customizeRow.appendChild(shortcutCell);
+
+				const urlCell = document.createElement("td");
+				urlCell.textContent = "customize.html";
+				customizeRow.appendChild(urlCell);
+
+				const defaultCell = document.createElement("td");
+				defaultCell.className = "default-column";
+				const radioBtn = document.createElement("input");
+				radioBtn.type = "radio";
+				radioBtn.name = "defaultBang";
+				radioBtn.value = "customize";
+				radioBtn.disabled = true;
+				defaultCell.appendChild(radioBtn);
+				customizeRow.appendChild(defaultCell);
+
+				const actionsCell = document.createElement("td");
+				const deleteBtn = document.createElement("button");
+				deleteBtn.textContent = "Delete";
+				deleteBtn.disabled = true;
+				actionsCell.appendChild(deleteBtn);
+				customizeRow.appendChild(actionsCell);
+
+				tbody.appendChild(customizeRow);
+			}
+
+			document.getElementById("addBang").addEventListener("click", () => {
+				const shortcut = document.getElementById("shortcut").value.trim();
+				const url = document.getElementById("url").value.trim();
+
+				if (!shortcut || !url) {
+					showMessage("Please fill in both fields!", "error");
+					return;
+				}
+
+				bangs[shortcut] = url;
+				saveBangs();
+				renderBangsTable();
+
+				document.getElementById("shortcut").value = "";
+				document.getElementById("url").value = "";
+			});
+
+			function showMessage(message, type = "success") {
+				const messageDiv = document.getElementById("message");
+				messageDiv.textContent = message;
+				messageDiv.style.display = "block";
+
+				if (type === "error") {
+					messageDiv.style.backgroundColor = "#f2dede";
+					messageDiv.style.color = "#a94442";
+				} else {
+					messageDiv.style.backgroundColor = "#dff0d8";
+					messageDiv.style.color = "#3c763d";
+				}
+
+				setTimeout(() => {
+					messageDiv.style.display = "none";
+				}, 3000);
+			}
+
+			loadBangs();
+		</script>
+	</body>
+</html>

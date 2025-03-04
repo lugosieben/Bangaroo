@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="search" type="application/opensearchdescription+xml" title="Bangaroo" href="opensearch.xml" />
+
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Bangaroo to Your Browser - Bangaroo</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<style>
+			body {
+				background-color: white;
+				color: black;
+				margin: 0;
+				padding: 20px;
+				font-family: Arial, sans-serif;
+				line-height: 1.6;
+			}
+			.container {
+				max-width: 800px;
+				margin: 0 auto;
+			}
+			h1 {
+				text-align: center;
+				margin-bottom: 30px;
+			}
+			.url-box {
+				background-color: #f5f5f5;
+				padding: 15px;
+				border-radius: 6px;
+				margin-bottom: 20px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.url-display {
+				font-family: monospace;
+				word-break: break-all;
+			}
+			.copy-btn {
+				padding: 8px 15px;
+				background-color: black;
+				color: white;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				margin-left: 10px;
+			}
+			.browser-section {
+				margin-bottom: 30px;
+				padding: 20px;
+				border: 1px solid #eee;
+				border-radius: 6px;
+			}
+			.browser-icon {
+				width: 24px;
+				height: 24px;
+				vertical-align: middle;
+				margin-right: 5px;
+			}
+			.home-btn {
+				display: block;
+				width: max-content;
+				margin: 30px auto;
+				padding: 10px 20px;
+				background-color: #555;
+				color: white;
+				text-decoration: none;
+				border-radius: 4px;
+			}
+			ol {
+				margin-left: 20px;
+			}
+			li {
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Add Bangaroo to Your Browser</h1>
+
+			<div class="url-box">
+				<div class="url-display" id="search-url"></div>
+				<button class="copy-btn" onclick="copySearchUrl()">Copy URL</button>
+			</div>
+
+			<div class="browser-section">
+				<h2>
+					<img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="Chrome" class="browser-icon" />
+					Google Chrome
+				</h2>
+				<ol>
+					<li>Right-click on the address bar and select <strong>Edit search engines</strong>.</li>
+					<li>Under "Other search engines," click <strong>Add</strong>.</li>
+					<li>
+						Fill in the following:
+						<ul>
+							<li><strong>Search engine</strong>: Bangaroo</li>
+							<li><strong>Keyword</strong>: bangaroo (or any shortcut you prefer)</li>
+							<li><strong>URL</strong>: Paste the URL copied from above</li>
+						</ul>
+					</li>
+					<li>Click <strong>Add</strong> to save.</li>
+					<li>
+						To make it your default search engine, find Bangaroo in the list, click the three dots, and select "Make
+						default".
+					</li>
+				</ol>
+			</div>
+
+			<div class="browser-section">
+				<h2>
+					<img
+						src="https://www.mozilla.org/media/protocol/img/logos/firefox/browser/logo.eb1324e44442.svg"
+						alt="Firefox"
+						class="browser-icon" />
+					Mozilla Firefox
+				</h2>
+				<ol>
+					<li>Right-click on the search bar at the top of Firefox.</li>
+					<li>Select <strong>Add a Keyword for this Search</strong>.</li>
+					<li>
+						Fill in the following:
+						<ul>
+							<li><strong>Name</strong>: Bangaroo</li>
+							<li><strong>Keyword</strong>: bangaroo (or any shortcut you prefer)</li>
+							<li><strong>URL</strong>: Paste the URL copied from above</li>
+						</ul>
+					</li>
+					<li>Click <strong>Save</strong>.</li>
+					<li>To set as default, go to Settings > Search > Default Search Engine and select Bangaroo.</li>
+				</ol>
+			</div>
+
+			<div class="browser-section">
+				<h2>
+					<img
+						src="https://edgestatic.azureedge.net/shared/cms/lrs1c69a1j/section-images/2c3f3c46bd764335beec466a0acfde0e-png-w639.webp"
+						alt="Edge"
+						class="browser-icon" />
+					Microsoft Edge
+				</h2>
+				<ol>
+					<li>Go to Settings (click the ... menu in the top right).</li>
+					<li>Select <strong>Privacy, search, and services</strong> from the sidebar.</li>
+					<li>Scroll down to <strong>Address bar and search</strong> and click on it.</li>
+					<li>Click <strong>Add search engine</strong>.</li>
+					<li>
+						Fill in the following:
+						<ul>
+							<li><strong>Search engine</strong>: Bangaroo</li>
+							<li><strong>Keyword</strong>: bangaroo</li>
+							<li><strong>URL with %s in place of query</strong>: Paste the URL copied from above</li>
+						</ul>
+					</li>
+					<li>Click <strong>Add</strong>.</li>
+					<li>To make it your default, find Bangaroo in the search engine list and click "Make default".</li>
+				</ol>
+			</div>
+
+			<div class="browser-section">
+				<h2>
+					<img
+						src="https://help.apple.com/assets/674E29452A605B20AB0728F7/674E294742A318B69C0EE97F/de_DE/fd47575ee10ce7f149900e7dc633c131.png"
+						alt="Safari"
+						class="browser-icon" />
+					Safari
+				</h2>
+				Unfortunately, Safari doesn't allow custom search engines.
+			</div>
+
+			<div class="browser-section">
+				<h2>
+					<img src="https://brave.com/static-assets/images/brave-logo-sans-text.svg" alt="Brave" class="browser-icon" />
+					Brave
+				</h2>
+				<ol>
+					<li>Go to Settings > Search engines.</li>
+					<li>Scroll to the bottom and click <strong>Add</strong>.</li>
+					<li>
+						Fill in the following:
+						<ul>
+							<li><strong>Search engine</strong>: Bangaroo</li>
+							<li><strong>Keyword</strong>: bangaroo</li>
+							<li><strong>URL with %s in place of query</strong>: Paste the URL copied from above</li>
+						</ul>
+					</li>
+					<li>Click <strong>Add</strong>.</li>
+					<li>To make it your default, find Bangaroo in the list and click the three dots, then "Make default".</li>
+				</ol>
+			</div>
+
+			<a href="index.html" class="home-btn">Back to Homepage</a>
+		</div>
+
+		<script>
+			// Generate the search URL based on the current location
+			function generateSearchUrl() {
+				const protocol = window.location.protocol;
+				const host = window.location.host;
+				const path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/") + 1);
+
+				return `${protocol}//${host}${path}search.html?q=%s`;
+			}
+
+			// Display and allow copying of the search URL
+			document.getElementById("search-url").textContent = generateSearchUrl();
+
+			function copySearchUrl() {
+				const searchUrl = document.getElementById("search-url").textContent;
+				navigator.clipboard
+					.writeText(searchUrl)
+					.then(() => {
+						const copyBtn = document.querySelector(".copy-btn");
+						copyBtn.textContent = "Copied!";
+						setTimeout(() => {
+							copyBtn.textContent = "Copy URL";
+						}, 2000);
+					})
+					.catch((err) => {
+						console.error("Failed to copy: ", err);
+						alert("Failed to copy URL. Please select and copy it manually.");
+					});
+			}
+		</script>
+	</body>
+</html>
