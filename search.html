@@ -6,43 +6,35 @@
 		<title>Bangaroo</title>
 		<link rel="icon" href="favicon.ico" type="image/x-icon" />
 		<script>
-			const defaultBangs = {
-				g: "https://www.google.com/search?q=%s",
-				w: "https://en.wikipedia.org/wiki/Special:Search?search=%s",
-				yt: "https://www.youtube.com/results?search_query=%s",
-				gh: "https://github.com/search?q=%s",
-				a: "https://www.amazon.com/s?k=%s",
-				m: "https://www.google.com/maps?q=%s",
-				r: "https://www.reddit.com/search/?q=%s",
-				pp: "https://www.perplexity.ai/?s=o&q=%s",
-				gpt: "https://chat.openai.com?q=%s",
-				t3: "https://www.t3.chat/new?q=%s",
-			};
-
-			let bangs = {};
-			const savedBangs = localStorage.getItem("bangarooBangs");
-			if (savedBangs) {
-				bangs = JSON.parse(savedBangs);
-			} else {
-				bangs = defaultBangs;
-			}
-			bangs.customize = "customize.html";
-
-			let defaultBang = localStorage.getItem("bangarooDefault") || "g";
-
 			const searchQuery = new URLSearchParams(window.location.search).get("q");
-			if (searchQuery) {
-				const match = searchQuery.match(/!(\S+)/i);
+			if (!searchQuery) {
+				window.location.replace("./");
+			} else {
+				const defaultBangs = {
+					g: "https://www.google.com/search?q=%s",
+					w: "https://en.wikipedia.org/wiki/Special:Search?search=%s",
+					yt: "https://www.youtube.com/results?search_query=%s",
+					gh: "https://github.com/search?q=%s",
+					ghr: "https://github.com/%s",
+					a: "https://www.amazon.com/s?k=%s",
+					m: "https://www.google.com/maps?q=%s",
+					r: "https://www.reddit.com/search/?q=%s",
+					pp: "https://www.perplexity.ai/?s=o&q=%s",
+					gpt: "https://chat.openai.com?q=%s",
+					t3: "https://www.t3.chat/new?q=%s",
+				};
 
-				const bang = match?.[1]?.toLowerCase();
-				const selectedBang = bang ? bangs[bang] || bangs[defaultBang] : bangs[defaultBang];
+				const bangs = JSON.parse(localStorage.getItem("bangarooBangs")) || defaultBangs;
+				bangs.customize = "customize.html";
+
+				const defaultBang = localStorage.getItem("bangarooDefault") || "g";
+				const match = searchQuery.match(/!(\S+)/i);
+				const bangKey = match?.[1]?.toLowerCase();
+				const bangUrl = bangKey && bangs[bangKey] ? bangs[bangKey] : bangs[defaultBang];
 
 				const cleanQuery = searchQuery.replace(/!\S+\s*/i, "").trim();
-
-				const searchUrl = selectedBang.replace("%s", encodeURIComponent(cleanQuery).replace(/%2F/g, "/"));
+				const searchUrl = bangUrl.replace("%s", encodeURIComponent(cleanQuery).replace(/%2F/g, "/"));
 				window.location.replace(searchUrl);
-			} else {
-				window.location.replace("./");
 			}
 		</script>
 	</head>
